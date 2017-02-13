@@ -4,15 +4,12 @@
 #--------------------------------------------------------------------------
 #
 # To edit the 'workspace' base Image, visit its repository on Github
-#    https://github.com/LaraDock/workspace
-#
-# To change its version, see the available Tags on the Docker Hub:
-#    https://hub.docker.com/r/laradock/workspace/tags/
+#    https://github.com/platolin/laral_freetds
 #
 
-FROM laradock/workspace:1.3
+FROM platolin/laral_freetds
 
-MAINTAINER Mahmoud Zalt <mahmoud@zalt.me>
+MAINTAINER plato lin <lin.plato@gmail.com>
 
 #
 #--------------------------------------------------------------------------
@@ -68,10 +65,11 @@ RUN if [ ${INSTALL_SOAP} = true ]; then \
 # Set Timezone
 #####################################
 
-ARG TZ=UTC
-ENV TZ ${TZ}
-RUN ln -snf /usr/share/zoneinfo/$TZ /etc/localtime && echo $TZ > /etc/timezone
-
+# ARG TZ=UTC
+# ENV TZ ${TZ}
+# RUN ln -snf /usr/share/zoneinfo/$TZ /etc/localtime && echo $TZ > /etc/timezone
+# Set the time zone
+RUN echo "Asia/Taipei" > /etc/timezone && dpkg-reconfigure -f noninteractive tzdata 
 #####################################
 # Composer:
 #####################################
@@ -102,6 +100,10 @@ USER root
 
 COPY ./crontab /etc/cron.d
 RUN chmod -R 644 /etc/cron.d
+#####################################
+#freetds
+#####################################
+COPY ./freetds.conf /etc/freetds
 
 #####################################
 # User Aliases
