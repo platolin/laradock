@@ -4,10 +4,10 @@
 #--------------------------------------------------------------------------
 #
 # To edit the 'workspace' base Image, visit its repository on Github
-#    https://github.com/platolin/laral_freetds
+#    https://github.com/platolin/ubuntu_freetds
 #
 
-FROM platolin/laral_freetds
+FROM platolin/ubuntu_freetds
 
 MAINTAINER plato lin <lin.plato@gmail.com>
 
