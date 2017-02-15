@@ -65,9 +65,9 @@ RUN if [ ${INSTALL_SOAP} = true ]; then \
 # Set Timezone
 #####################################
 
-# ARG TZ=UTC
-# ENV TZ ${TZ}
-# RUN ln -snf /usr/share/zoneinfo/$TZ /etc/localtime && echo $TZ > /etc/timezone
+ARG TZ=CST
+ENV TZ ${TZ}
+RUN ln -snf /usr/share/zoneinfo/$TZ /etc/localtime && echo $TZ > /etc/timezone
 # Set the time zone
 RUN echo "Asia/Taipei" > /etc/timezone && dpkg-reconfigure -f noninteractive tzdata 
 #####################################
