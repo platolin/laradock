@@ -57,8 +57,8 @@ RUN if [ ${INSTALL_SOAP} = true ]; then \
   # Install the PHP SOAP extension
   apt-get -y update && \
   add-apt-repository -y ppa:ondrej/php && \
-  apt-get -y install libxml2-dev php7.0-soap && \
-  echo "extension=soap.so" >> /etc/php/7.0/cli/conf.d/40-soap.ini \
+  apt-get -y install libxml2-dev php7.1-soap && \
+  echo "extension=soap.so" >> /etc/php/7.1/cli/conf.d/40-soap.ini \
 ;fi
 
 #####################################
@@ -130,12 +130,12 @@ ARG INSTALL_XDEBUG=false
 RUN if [ ${INSTALL_XDEBUG} = true ]; then \
     # Load the xdebug extension only with phpunit commands
     apt-get update && \
-    apt-get install -y --force-yes php7.0-xdebug && \
-    sed -i 's/^/;/g' /etc/php/7.0/cli/conf.d/20-xdebug.ini && \
+    apt-get install -y --force-yes php7.1-xdebug && \
+    sed -i 's/^/;/g' /etc/php/7.1/cli/conf.d/20-xdebug.ini && \
     echo "alias phpunit='php -dzend_extension=xdebug.so /var/www/vendor/bin/phpunit'" >> ~/.bashrc \
 ;fi
 # ADD for REMOTE debugging
-COPY ./xdebug.ini /etc/php/7.0/cli/conf.d/xdebug.ini
+COPY ./xdebug.ini /etc/php/7.1/cli/conf.d/xdebug.ini
 
 #####################################
 # ssh:
@@ -166,7 +166,7 @@ ENV INSTALL_MONGO ${INSTALL_MONGO}
 RUN if [ ${INSTALL_MONGO} = true ]; then \
     # Install the mongodb extension
     pecl install mongodb && \
-    echo "extension=mongodb.so" >> /etc/php/7.0/cli/conf.d/30-mongodb.ini \
+    echo "extension=mongodb.so" >> /etc/php/7.1/cli/conf.d/30-mongodb.ini \
 ;fi
 
 #####################################
@@ -262,7 +262,7 @@ ARG INSTALL_AEROSPIKE_EXTENSION=true
 ENV INSTALL_AEROSPIKE_EXTENSION ${INSTALL_AEROSPIKE_EXTENSION}
 
 # Copy aerospike configration for remote debugging
-COPY ./aerospike.ini /etc/php/7.0/cli/conf.d/aerospike.ini
+COPY ./aerospike.ini /etc/php/7.1/cli/conf.d/aerospike.ini
 
 RUN if [ ${INSTALL_AEROSPIKE_EXTENSION} = true ]; then \
     # Install the php aerospike extension
@@ -279,7 +279,7 @@ RUN if [ ${INSTALL_AEROSPIKE_EXTENSION} = true ]; then \
 ;fi
 
 RUN if [ ${INSTALL_AEROSPIKE_EXTENSION} = false ]; then \
-    rm /etc/php/7.0/cli/conf.d/aerospike.ini \
+    rm /etc/php/7.1/cli/conf.d/aerospike.ini \
 ;fi
 
 #####################################
@@ -296,7 +296,7 @@ RUN if [ ${INSTALL_V8JS_EXTENSION} = true ]; then \
     && apt-get update \
     && apt-get install -y php-dev php-pear libv8-5.4 \
     && pecl install v8js \
-    && echo "extension=v8js.so" >> /etc/php/7.0/cli/php.ini \
+    && echo "extension=v8js.so" >> /etc/php/7.1/cli/php.ini \
 ;fi
 
 #####################################
