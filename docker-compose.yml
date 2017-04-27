@@ -9,7 +9,17 @@ services:
         volumes:
             - ../:/var/www
 #            - ../sample/:/var/www/sample
+### gitlab-runner Server Container ##################################
 
+    gitlab-runner:
+        restart: always
+
+        image: gitlab/gitlab-runner
+        volumes_from:
+            - applications
+
+#        volumes:
+#            - ../var/www/:/var/www/
 ### Workspace Utilities Container ###########################
 
     workspace:
@@ -33,7 +43,7 @@ services:
                 - PGID=1000
                 - NODE_VERSION=stable
                 - YARN_VERSION=latest
-                - TZ=UTC
+                - TZ=Asia/Taipei
         volumes_from:
             - applications
         extra_hosts:
